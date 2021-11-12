@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "SDL.h"
+#include "SDL_image.h"
 
 class Snake {
  public:
@@ -11,28 +12,27 @@ class Snake {
   Snake(int grid_width, int grid_height)
       : grid_width(grid_width),
         grid_height(grid_height),
-        head_x(grid_width / 2),
-        head_y(grid_height / 2) {}
+        head_x(0),
+        head_y(0) {}
 
   void Update();
 
-  void GrowBody();
   bool SnakeCell(int x, int y);
 
   Direction direction = Direction::kUp;
 
-  float speed{0.1f};
-  int size{1};
+  float velocity_x{0.0};
+  float velocity_y{0.0};
   bool alive{true};
   float head_x;
   float head_y;
-  std::vector<SDL_Point> body;
+  float width{0.5};
+  float height{0.5};
 
  private:
+  void LoadImage(SDL_Surface *background);
   void UpdateHead();
-  void UpdateBody(SDL_Point &current_cell, SDL_Point &prev_cell);
-
-  bool growing{false};
+  SDL_Surface* image;
   int grid_width;
   int grid_height;
 };

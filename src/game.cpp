@@ -2,8 +2,9 @@
 #include <iostream>
 #include "SDL.h"
 
-Game::Game(std::size_t grid_width, std::size_t grid_height)
+Game::Game(std::size_t grid_width, std::size_t grid_height, std::size_t screen_width, std::size_t screen_height)
     : snake(grid_width, grid_height),
+      terrain(grid_width, grid_height, screen_width, screen_height),
       engine(dev()),
       random_w(0, static_cast<int>(grid_width - 1)),
       random_h(0, static_cast<int>(grid_height - 1)) {
@@ -18,6 +19,8 @@ void Game::Run(Controller const &controller, Renderer &renderer,
   Uint32 frame_duration;
   int frame_count = 0;
   bool running = true;
+  srand (time(NULL));
+  terrain.Generate();
 
   while (running) {
     frame_start = SDL_GetTicks();
@@ -25,7 +28,7 @@ void Game::Run(Controller const &controller, Renderer &renderer,
     // Input, Update, Render - the main game loop.
     controller.HandleInput(running, snake);
     Update();
-    renderer.Render(snake, food);
+    renderer.Render(snake, food, terrain);
 
     frame_end = SDL_GetTicks();
 
@@ -77,11 +80,9 @@ void Game::Update() {
   if (food.x == new_x && food.y == new_y) {
     score++;
     PlaceFood();
-    // Grow snake and increase speed.
-    snake.GrowBody();
-    snake.speed += 0.02;
   }
+  terrain.CollidesWith(snake);
+  terrain.Advance(snake);
 }
 
 int Game::GetScore() const { return score; }
-int Game::GetSize() const { return snake.size; }

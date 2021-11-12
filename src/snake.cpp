@@ -1,6 +1,38 @@
 #include "snake.h"
 #include <cmath>
 #include <iostream>
+#include <algorithm>
+
+
+void Snake::LoadImage(SDL_Surface *background) {
+
+  std::string path = "../src/player.png";
+
+  //The final optimized image
+  SDL_Surface* image = NULL;
+
+  //Load image at specified path
+  SDL_Surface* loadedSurface = IMG_Load( path.c_str() );
+
+  if( loadedSurface == NULL )
+  {
+      printf( "Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError() );
+  }
+  else
+  {
+      //Convert surface to screen format
+      image = SDL_ConvertSurface( loadedSurface, background->format, 0 );
+      if( image == NULL )
+      {
+          printf( "Unable to optimize image %s! SDL Error: %s\n", path.c_str(), SDL_GetError() );
+      }
+
+      //Get rid of old loaded surface
+      SDL_FreeSurface( loadedSurface );
+  }
+}
+
+
 
 void Snake::Update() {
   SDL_Point prev_cell{
@@ -11,69 +43,38 @@ void Snake::Update() {
   SDL_Point current_cell{
       static_cast<int>(head_x),
       static_cast<int>(head_y)};  // Capture the head's cell after updating.
-
-  // Update all of the body vector items if the snake head has moved to a new
-  // cell.
-  if (current_cell.x != prev_cell.x || current_cell.y != prev_cell.y) {
-    UpdateBody(current_cell, prev_cell);
-  }
 }
 
 void Snake::UpdateHead() {
-  switch (direction) {
-    case Direction::kUp:
-      head_y -= speed;
-      break;
 
-    case Direction::kDown:
-      head_y += speed;
-      break;
+  head_y += velocity_y;
+  head_x += velocity_x;
 
-    case Direction::kLeft:
-      head_x -= speed;
-      break;
+  velocity_x *= 0.95; // friction
+  velocity_y += 0.01;
 
-    case Direction::kRight:
-      head_x += speed;
-      break;
+  if (head_x < 0) {
+    head_x = 0;
+    velocity_x = 0;
   }
-
-  // Wrap the Snake around to the beginning if going off of the screen.
-  head_x = fmod(head_x + grid_width, grid_width);
-  head_y = fmod(head_y + grid_height, grid_height);
-}
-
-void Snake::UpdateBody(SDL_Point &current_head_cell, SDL_Point &prev_head_cell) {
-  // Add previous head location to vector
-  body.push_back(prev_head_cell);
-
-  if (!growing) {
-    // Remove the tail from the vector.
-    body.erase(body.begin());
-  } else {
-    growing = false;
-    size++;
+  else if (head_x > grid_width-width) {
+    head_x = (float)grid_width-width;
+    //velocity_x = 0;
   }
-
-  // Check if the snake has died.
-  for (auto const &item : body) {
-    if (current_head_cell.x == item.x && current_head_cell.y == item.y) {
-      alive = false;
-    }
+  if (head_y < 0) {
+    head_y = 0;
+    velocity_y = 0;
+  }
+  else if (head_y > grid_height-height) {
+    head_y = (float)grid_height-height;
+    velocity_y = 0;
   }
 }
-
-void Snake::GrowBody() { growing = true; }
 
 // Inefficient method to check if cell is occupied by snake.
 bool Snake::SnakeCell(int x, int y) {
   if (x == static_cast<int>(head_x) && y == static_cast<int>(head_y)) {
     return true;
-  }
-  for (auto const &item : body) {
-    if (x == item.x && y == item.y) {
-      return true;
-    }
   }
   return false;
 }
