@@ -25,12 +25,24 @@ Renderer::Renderer(const std::size_t screen_width,
     std::cerr << " SDL_Error: " << SDL_GetError() << "\n";
   }
 
+
   // Create renderer
   sdl_renderer = SDL_CreateRenderer(sdl_window, -1, SDL_RENDERER_ACCELERATED);
   if (nullptr == sdl_renderer) {
     std::cerr << "Renderer could not be created.\n";
     std::cerr << "SDL_Error: " << SDL_GetError() << "\n";
   }
+
+  //Initialize PNG loading
+  int imgFlags = IMG_INIT_PNG;
+  if( !( IMG_Init( imgFlags ) & imgFlags ) )
+  {
+      printf( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );
+  }
+
+  printf("About to load images.");
+  LoadPlayerImage();
+  LoadTerrainImage();
 }
 
 Renderer::~Renderer() {
@@ -44,11 +56,11 @@ void Renderer::Render(Snake const snake, SDL_Point const &food, Terrain const te
   block.h = screen_height / grid_height;
 
   // Clear screen
-  SDL_SetRenderDrawColor(sdl_renderer, 0x1E, 0x1E, 0x1E, 0xFF);
+  SDL_SetRenderDrawColor(sdl_renderer, 135, 206, 235, 0xFF);
   SDL_RenderClear(sdl_renderer);
 
   // Render food
-  SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xCC, 0x00, 0xFF);
+  SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xCC, 0x00, 0xFF); // sky blue color
   block.x = food.x * block.w;
   block.y = food.y * block.h;
   SDL_RenderFillRect(sdl_renderer, &block);
@@ -60,6 +72,7 @@ void Renderer::Render(Snake const snake, SDL_Point const &food, Terrain const te
       block.x = point.x * block.w;
       block.y = point.y * block.h;
       SDL_RenderFillRect(sdl_renderer, &block);
+      SDL_RenderCopy(sdl_renderer, terrain_image, NULL, &block);
     }
   }
 
@@ -77,6 +90,10 @@ void Renderer::Render(Snake const snake, SDL_Point const &food, Terrain const te
   }
   SDL_RenderFillRect(sdl_renderer, &block);
 
+
+  // Render Player Image
+  SDL_RenderCopy(sdl_renderer, player_image, NULL, &block);
+
   // Update Screen
   SDL_RenderPresent(sdl_renderer);
 }
@@ -84,4 +101,58 @@ void Renderer::Render(Snake const snake, SDL_Point const &food, Terrain const te
 void Renderer::UpdateWindowTitle(int score, int fps) {
   std::string title{"Snake Score: " + std::to_string(score) + " FPS: " + std::to_string(fps)};
   SDL_SetWindowTitle(sdl_window, title.c_str());
+}
+
+void Renderer::LoadPlayerImage() {
+
+  std::string path = "/Users/kitson_swann/Documents/udacity_cpp/CppND-Capstone-Snake-Game/src/img/player.png";
+
+  printf("Before load");
+  //Load image at specified path
+  SDL_Surface *loadedSurface = IMG_Load( path.c_str() );
+
+  if( loadedSurface == NULL )
+  {
+      printf( "Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError() );
+  }
+  else
+  {
+      //Convert surface to screen format
+      player_image = SDL_CreateTextureFromSurface(sdl_renderer, loadedSurface);
+      if( player_image == NULL )
+      {
+          printf( "Unable to optimize image %s! SDL Error: %s\n", path.c_str(), SDL_GetError() );
+      }
+      printf("Loaded player image");
+
+      //Get rid of old loaded surface
+      SDL_FreeSurface( loadedSurface );
+  }
+}
+
+void Renderer::LoadTerrainImage() {
+
+  std::string path = "/Users/kitson_swann/Documents/udacity_cpp/CppND-Capstone-Snake-Game/src/img/stone.png";
+
+  printf("Before load");
+  //Load image at specified path
+  SDL_Surface *loadedSurface = IMG_Load( path.c_str() );
+
+  if( loadedSurface == NULL )
+  {
+      printf( "Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError() );
+  }
+  else
+  {
+      //Convert surface to screen format
+      terrain_image = SDL_CreateTextureFromSurface(sdl_renderer, loadedSurface);
+      if( terrain_image == NULL )
+      {
+          printf( "Unable to optimize image %s! SDL Error: %s\n", path.c_str(), SDL_GetError() );
+      }
+      printf("Loaded terrain_imagee");
+
+      //Get rid of old loaded surface
+      SDL_FreeSurface( loadedSurface );
+  }
 }

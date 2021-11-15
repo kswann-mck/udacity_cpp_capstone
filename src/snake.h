@@ -3,7 +3,6 @@
 
 #include <vector>
 #include "SDL.h"
-#include "SDL_image.h"
 
 class Snake {
  public:
@@ -26,13 +25,11 @@ class Snake {
   bool alive{true};
   float head_x;
   float head_y;
-  float width{0.5};
-  float height{0.5};
+  float width{0.8};
+  float height{0.8};
 
  private:
-  void LoadImage(SDL_Surface *background);
   void UpdateHead();
-  SDL_Surface* image;
   int grid_width;
   int grid_height;
 };

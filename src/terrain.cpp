@@ -4,7 +4,8 @@
 #include <algorithm>
 
 void Terrain::Advance(Snake &snake) {
-    if (snake.head_x >= grid_width-2) {
+  if (advance_n % 10 == 0) {
+    if (snake.head_x >= grid_width-6) {
 
       float move_distance = snake.velocity_x;
 
@@ -23,7 +24,7 @@ void Terrain::Advance(Snake &snake) {
 
       // move the snake back one grid width
       snake.head_x -= move_distance;
-      snake.velocity_x *= 0.5;
+      //snake.velocity_x *= 0.5;
 
       // if the first column is now off the screen
       if ((terrain_blocks[0][0].x+1) <= 0) {
@@ -31,6 +32,8 @@ void Terrain::Advance(Snake &snake) {
         terrain_blocks.erase(terrain_blocks.begin());
       }
     }
+  }
+  advance_n += 1;
 }
 
 int Terrain::NextColumnHeight() {

@@ -40,6 +40,7 @@ class Terrain {
   int max_height;
   int min_height;
   int last_column_height;
+  int advance_n{0};
 };
 
 #endif
