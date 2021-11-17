@@ -3,11 +3,11 @@
 #include <iostream>
 #include <algorithm>
 
-void Terrain::Advance(Snake &snake) {
+void Terrain::Advance(Player &player) {
   if (advance_n % 10 == 0) {
-    if (snake.head_x >= grid_width-6) {
+    if (player.position_x >= grid_width-6) {
 
-      float move_distance = snake.velocity_x;
+      float move_distance = player.velocity_x;
 
       // add a new column
       int next_height = Terrain::NextColumnHeight();
@@ -22,9 +22,9 @@ void Terrain::Advance(Snake &snake) {
         }
       }
 
-      // move the snake back one grid width
-      snake.head_x -= move_distance;
-      //snake.velocity_x *= 0.5;
+      // move the player back one grid width
+      player.position_x -= move_distance;
+      //player.velocity_x *= 0.5;
 
       // if the first column is now off the screen
       if ((terrain_blocks[0][0].x+1) <= 0) {
@@ -76,11 +76,11 @@ void Terrain::Generate() {
     }
 }
 
-void Terrain::CollidesWith(Snake &snake) {
-  float x0 = snake.head_x;
-  float x1 = x0 + snake.width;
-  float y0 = snake.head_y;
-  float y1 = y0 + snake.height;
+void Terrain::CollidesWith(Player &player) {
+  float x0 = player.position_x;
+  float x1 = x0 + player.width;
+  float y0 = player.position_y;
+  float y1 = y0 + player.height;
   
   for (std::vector<SDL_Point> column: terrain_blocks) {
     for (SDL_Point point: column) {
@@ -95,20 +95,20 @@ void Terrain::CollidesWith(Snake &snake) {
       // top contact
       if (y1 >= py0 && y1 < py1 && (x1 >= px0 && x1 < px1 || x0 > px0 && x0 <= px1 || x0 > px0 && x1 < px1)) { // we've crossed from the left
         std::cout << "Top collision"<< "\n";
-        snake.head_y = (py0-snake.height); // push above the block surface
-        snake.velocity_y = 0;
+        player.position_y = (py0-player.height); // push above the block surface
+        player.velocity_y = 0;
 
       // left contact
       } else if (x1 >= px0 && x1 < px1 && (y1 > py0 && y1 <= py1 || y0 > py0 && y0 <= py1 || y0 > py0 && y1 < py1)) { // we've crossed from the left
         std::cout << "Left collision"<< "\n";
-        snake.head_x = (px0-snake.width)-0.0001; // push to the left
-        snake.velocity_x = 0;
+        player.position_x = (px0-player.width)-0.0001; // push to the left
+        player.velocity_x = 0;
       }
       // right contact
       else if (x0 > px0 && x0 <= px1 && (y1 > py0 && y1 <= py1 || y0 > py0 && y0 <= py1 || y0 > py0 && y1 < py1)) { // we've crossed from the left
         std::cout << "Right collision"<< "\n";
-        snake.head_x = px1+0.0001; // push to the right
-        snake.velocity_x = 0;
+        player.position_x = px1+0.0001; // push to the right
+        player.velocity_x = 0;
       }
 
     }

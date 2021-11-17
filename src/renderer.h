@@ -4,7 +4,7 @@
 #include <vector>
 #include "SDL.h"
 #include "SDL_image.h"
-#include "snake.h"
+#include "player.h"
 #include "terrain.h"
 
 class Renderer {
@@ -13,7 +13,7 @@ class Renderer {
            const std::size_t grid_width, const std::size_t grid_height);
   ~Renderer();
 
-  void Render(Snake const snake, SDL_Point const &food, Terrain const terrain);
+  void Render(Player const player, SDL_Point const &food, Terrain const terrain);
   void UpdateWindowTitle(int score, int fps);
   void LoadPlayerImage();
   void LoadTerrainImage();

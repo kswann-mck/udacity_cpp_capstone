@@ -1,31 +1,31 @@
 #include "controller.h"
 #include <iostream>
 #include "SDL.h"
-#include "snake.h"
+#include "player.h"
 
-void Controller::ChangeDirection(Snake &snake, Snake::Direction input,
-                                 Snake::Direction opposite) const {
+void Controller::ChangeDirection(Player &player, Player::Direction input,
+                                 Player::Direction opposite) const {
   switch (input) {
-    case Snake::Direction::kUp:
-      snake.velocity_y -= 0.2;
+    case Player::Direction::kUp:
+      player.velocity_y -= 0.2;
       break;
 
-    case Snake::Direction::kDown:
-      snake.velocity_y += 0.1;
+    case Player::Direction::kDown:
+      player.velocity_y += 0.1;
       break;
 
-    case Snake::Direction::kLeft:
-      snake.velocity_x -= 0.1;
+    case Player::Direction::kLeft:
+      player.velocity_x -= 0.1;
       break;
 
-    case Snake::Direction::kRight:
-      snake.velocity_x += 0.1;
+    case Player::Direction::kRight:
+      player.velocity_x += 0.1;
       break;
   }
   return;
 }
 
-void Controller::HandleInput(bool &running, Snake &snake) const {
+void Controller::HandleInput(bool &running, Player &player) const {
   SDL_Event e;
   while (SDL_PollEvent(&e)) {
     if (e.type == SDL_QUIT) {
@@ -37,20 +37,20 @@ void Controller::HandleInput(bool &running, Snake &snake) const {
       const Uint8* keystates = SDL_GetKeyboardState( NULL );
 
       if (keystates[SDL_GetScancodeFromKey(SDLK_UP)]) {
-          ChangeDirection(snake, Snake::Direction::kUp,
-                          Snake::Direction::kDown);
+          ChangeDirection(player, Player::Direction::kUp,
+                          Player::Direction::kDown);
       }
       if (keystates[SDL_GetScancodeFromKey(SDLK_DOWN)]) {
-          ChangeDirection(snake, Snake::Direction::kDown,
-                          Snake::Direction::kUp);
+          ChangeDirection(player, Player::Direction::kDown,
+                          Player::Direction::kUp);
       }
       if (keystates[SDL_GetScancodeFromKey(SDLK_LEFT)]) {
-        ChangeDirection(snake, Snake::Direction::kLeft,
-                          Snake::Direction::kRight);
+        ChangeDirection(player, Player::Direction::kLeft,
+                          Player::Direction::kRight);
       }
       if (keystates[SDL_GetScancodeFromKey(SDLK_RIGHT)]) {
-        ChangeDirection(snake, Snake::Direction::kRight,
-                          Snake::Direction::kLeft);
+        ChangeDirection(player, Player::Direction::kRight,
+                          Player::Direction::kLeft);
       }
     }
   }

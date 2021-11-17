@@ -3,7 +3,7 @@
 
 #include <vector>
 #include "SDL.h"
-#include "snake.h"
+#include "player.h"
 
 
 class Terrain {
@@ -25,8 +25,8 @@ class Terrain {
   int NextColumnHeight(); // get the height of the next column.
   std::vector<SDL_Point> NewColumn(int height, int current_width);
   void Generate(); // generates a random board of terrain blocks
-  void Advance(Snake &snake); // moves the board forward one column
-  void CollidesWith(Snake &snake); //detects if the player bounding box is colliding with any terrain blocks
+  void Advance(Player &player); // moves the board forward one column
+  void CollidesWith(Player &player); //detects if the player bounding box is colliding with any terrain blocks
 
   std::vector<std::vector<SDL_Point>> terrain_blocks; // 2d array of points to hold blocks
 

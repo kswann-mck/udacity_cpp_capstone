@@ -50,7 +50,7 @@ Renderer::~Renderer() {
   SDL_Quit();
 }
 
-void Renderer::Render(Snake const snake, SDL_Point const &food, Terrain const terrain) {
+void Renderer::Render(Player const player, SDL_Point const &food, Terrain const terrain) {
   SDL_Rect block;
   block.w = screen_height / grid_height;
   block.h = screen_height / grid_height;
@@ -77,13 +77,13 @@ void Renderer::Render(Snake const snake, SDL_Point const &food, Terrain const te
   }
 
 
-  // Render snake's head
-  block.x = snake.head_x * (float)block.w;
-  block.y = snake.head_y * (float)block.h;
-  block.w = block.w * snake.width;
-  block.h = block.h * snake.height;
+  // Render player's head
+  block.x = player.position_x * (float)block.w;
+  block.y = player.position_y * (float)block.h;
+  block.w = block.w * player.width;
+  block.h = block.h * player.height;
 
-  if (snake.alive) {
+  if (player.alive) {
     SDL_SetRenderDrawColor(sdl_renderer, 0x00, 0x7A, 0xCC, 0xFF);
   } else {
     SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0x00, 0x00, 0xFF);
@@ -99,13 +99,13 @@ void Renderer::Render(Snake const snake, SDL_Point const &food, Terrain const te
 }
 
 void Renderer::UpdateWindowTitle(int score, int fps) {
-  std::string title{"Snake Score: " + std::to_string(score) + " FPS: " + std::to_string(fps)};
+  std::string title{"Player Score: " + std::to_string(score) + " FPS: " + std::to_string(fps)};
   SDL_SetWindowTitle(sdl_window, title.c_str());
 }
 
 void Renderer::LoadPlayerImage() {
 
-  std::string path = "/Users/kitson_swann/Documents/udacity_cpp/CppND-Capstone-Snake-Game/src/img/player.png";
+  std::string path = "/Users/kitson_swann/Documents/udacity_cpp/udacity_cpp_capstone/src/img/player.png";
 
   printf("Before load");
   //Load image at specified path
@@ -132,7 +132,7 @@ void Renderer::LoadPlayerImage() {
 
 void Renderer::LoadTerrainImage() {
 
-  std::string path = "/Users/kitson_swann/Documents/udacity_cpp/CppND-Capstone-Snake-Game/src/img/stone.png";
+  std::string path = "/Users/kitson_swann/Documents/udacity_cpp/udacity_cpp_capstone/src/img/stone.png";
 
   printf("Before load");
   //Load image at specified path

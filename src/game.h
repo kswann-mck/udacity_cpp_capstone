@@ -5,7 +5,7 @@
 #include "SDL.h"
 #include "controller.h"
 #include "renderer.h"
-#include "snake.h"
+#include "player.h"
 #include "terrain.h"
 
 class Game {
@@ -17,7 +17,7 @@ class Game {
   int GetSize() const;
 
  private:
-  Snake snake;
+  Player player;
   Terrain terrain;
   SDL_Point food;
 
