@@ -1,5 +1,6 @@
 #include "renderer.h"
 #include <iostream>
+#include <filesystem>
 #include <string>
 
 Renderer::Renderer(const std::size_t screen_width,
@@ -106,9 +107,9 @@ void Renderer::UpdateWindowTitle(int score, int fps) {
 
 void Renderer::LoadPlayerImage() {
 
-  std::string path = "/Users/kitson_swann/Documents/udacity_cpp/udacity_cpp_capstone/src/img/player.png";
+  std::filesystem::path p = std::filesystem::current_path();
+  std::string path = p.string() + "/../src/img/player.png";
 
-  printf("Before load");
   //Load image at specified path
   SDL_Surface *loadedSurface = IMG_Load( path.c_str() );
 
@@ -124,7 +125,6 @@ void Renderer::LoadPlayerImage() {
       {
           printf( "Unable to optimize image %s! SDL Error: %s\n", path.c_str(), SDL_GetError() );
       }
-      printf("Loaded player image");
 
       //Get rid of old loaded surface
       SDL_FreeSurface( loadedSurface );
@@ -133,9 +133,9 @@ void Renderer::LoadPlayerImage() {
 
 void Renderer::LoadTerrainImage() {
 
-  std::string path = "/Users/kitson_swann/Documents/udacity_cpp/udacity_cpp_capstone/src/img/grass.png";
+  std::filesystem::path p = std::filesystem::current_path();
+  std::string path = p.string() + "/../src/img/grass.png";
 
-  printf("Before load");
   //Load image at specified path
   SDL_Surface *loadedSurface = IMG_Load( path.c_str() );
 
@@ -151,7 +151,6 @@ void Renderer::LoadTerrainImage() {
       {
           printf( "Unable to optimize image %s! SDL Error: %s\n", path.c_str(), SDL_GetError() );
       }
-      printf("Loaded terrain_imagee");
 
       //Get rid of old loaded surface
       SDL_FreeSurface( loadedSurface );
@@ -161,9 +160,9 @@ void Renderer::LoadTerrainImage() {
 
 void Renderer::LoadFoodImage() {
 
-  std::string path = "/Users/kitson_swann/Documents/udacity_cpp/udacity_cpp_capstone/src/img/food.png";
+  std::filesystem::path p = std::filesystem::current_path();
+  std::string path = p.string() + "/../src/img/food.png";
 
-  printf("Before load");
   //Load image at specified path
   SDL_Surface *loadedSurface = IMG_Load( path.c_str() );
 
@@ -179,7 +178,6 @@ void Renderer::LoadFoodImage() {
       {
           printf( "Unable to optimize image %s! SDL Error: %s\n", path.c_str(), SDL_GetError() );
       }
-      printf("Loaded food image");
 
       //Get rid of old loaded surface
       SDL_FreeSurface( loadedSurface );

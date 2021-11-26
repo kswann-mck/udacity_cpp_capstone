@@ -61,24 +61,17 @@ void Game::PlaceFood() {
   float height = 0.95;
   float x0, x1, y0, y1;
   
-
-  std::cout << "Food x, y: " << x0 << ", " << y0 << "\n";
   while (true) {
     x0 = (float)random_w(engine);
     y0 = (float)random_h(engine);
     x1 = x0 + width;
     y1 = y0 + height;
-
-    std::cout << "New position: " << x0 << "," << y0 << "\n";
     
     if (!player.PlayerCell(x0, y0)) {
-      std::cout << "New position valid" << x0 << "," << y0 << "\n";
       terrain.PushToTop(x0, y0, width, height);
-      std::cout << "After push to top" << x0 << "," << y0 << "\n";
       if (!player.PlayerCell(x0, y0)) {
         food.x = x0;
         food.y = y0;
-        std::cout << "New position of food" << food.x << "," << food.y << "\n";
         return;
       }
     }

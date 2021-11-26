@@ -40,7 +40,6 @@ void Terrain::Advance(Player &player, SDL_Point &food) {
 }
 
 int Terrain::NextColumnHeight() {
-  int hole = rand() % 2-1;
   int up_down = rand() % 3 -1; // random -1, 0, 1
   int next_height = last_column_height + up_down;
 
@@ -98,19 +97,16 @@ void Terrain::CollidesWith(Player &player) {
       
       // top contact
       if (y1 >= py0 && y1 < py1 && (x1 >= px0 && x1 < px1 || x0 > px0 && x0 <= px1 || x0 > px0 && x1 < px1)) { // we've crossed from the left
-        //std::cout << "Top collision"<< "\n";
         player.position_y = (py0-player.height); // push above the block surface
         player.velocity_y = 0;
 
       // left contact
       } else if (x1 >= px0 && x1 < px1 && (y1 > py0 && y1 <= py1 || y0 > py0 && y0 <= py1 || y0 > py0 && y1 < py1)) { // we've crossed from the left
-        //std::cout << "Left collision"<< "\n";
         player.position_x = (px0-player.width)-0.0001; // push to the left
         player.velocity_x = 0;
       }
       // right contact
       else if (x0 > px0 && x0 <= px1 && (y1 > py0 && y1 <= py1 || y0 > py0 && y0 <= py1 || y0 > py0 && y1 < py1)) { // we've crossed from the left
-        //std::cout << "Right collision"<< "\n";
         player.position_x = px1+0.0001; // push to the right
         player.velocity_x = 0;
       }
@@ -137,7 +133,6 @@ void Terrain::PushToTop(float &x0, float &y0, float width, float height) {
       if ((x0 >= px0 && x0 <= px1) || (x1 >= px0 && x1 <= px1)) {
         // push the position up to the top of the block
         if (y1 >= py0) {
-          std::cout << "Pushed up!" << "\n";
           y1 = py0-0.0001;
           y0 = y1-height;
         }
