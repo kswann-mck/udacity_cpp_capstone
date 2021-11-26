@@ -50,20 +50,37 @@ void Game::Run(Controller const &controller, Renderer &renderer,
     if (frame_duration < target_frame_duration) {
       SDL_Delay(target_frame_duration - frame_duration);
     }
+    if (!player.alive) {
+      running = false;
+    };
   }
 }
 
 void Game::PlaceFood() {
-  int x, y;
+  float width = 0.95;
+  float height = 0.95;
+  float x0, x1, y0, y1;
+  
+
+  std::cout << "Food x, y: " << x0 << ", " << y0 << "\n";
   while (true) {
-    x = random_w(engine);
-    y = random_h(engine);
-    // Check that the location is not occupied by a player item before placing
-    // food.
-    if (!player.PlayerCell(x, y)) {
-      food.x = x;
-      food.y = y;
-      return;
+    x0 = (float)random_w(engine);
+    y0 = (float)random_h(engine);
+    x1 = x0 + width;
+    y1 = y0 + height;
+
+    std::cout << "New position: " << x0 << "," << y0 << "\n";
+    
+    if (!player.PlayerCell(x0, y0)) {
+      std::cout << "New position valid" << x0 << "," << y0 << "\n";
+      terrain.PushToTop(x0, y0, width, height);
+      std::cout << "After push to top" << x0 << "," << y0 << "\n";
+      if (!player.PlayerCell(x0, y0)) {
+        food.x = x0;
+        food.y = y0;
+        std::cout << "New position of food" << food.x << "," << food.y << "\n";
+        return;
+      }
     }
   }
 }
@@ -80,9 +97,11 @@ void Game::Update() {
   if (food.x == new_x && food.y == new_y) {
     score++;
     PlaceFood();
+  } else if (food.x <= 0.0) {
+    PlaceFood();
   }
   terrain.CollidesWith(player);
-  terrain.Advance(player);
+  terrain.Advance(player, food);
 }
 
 int Game::GetScore() const { return score; }

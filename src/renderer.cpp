@@ -43,6 +43,7 @@ Renderer::Renderer(const std::size_t screen_width,
   printf("About to load images.");
   LoadPlayerImage();
   LoadTerrainImage();
+  LoadFoodImage();
 }
 
 Renderer::~Renderer() {
@@ -64,6 +65,8 @@ void Renderer::Render(Player const player, SDL_Point const &food, Terrain const 
   block.x = food.x * block.w;
   block.y = food.y * block.h;
   SDL_RenderFillRect(sdl_renderer, &block);
+  // Render Food Image
+  SDL_RenderCopy(sdl_renderer, food_image, NULL, &block);
 
   // Render terrain
   SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xCF, 0x00, 0xFF);
@@ -76,8 +79,7 @@ void Renderer::Render(Player const player, SDL_Point const &food, Terrain const 
     }
   }
 
-
-  // Render player's head
+  // Render player's position
   block.x = player.position_x * (float)block.w;
   block.y = player.position_y * (float)block.h;
   block.w = block.w * player.width;
@@ -89,7 +91,6 @@ void Renderer::Render(Player const player, SDL_Point const &food, Terrain const 
     SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0x00, 0x00, 0xFF);
   }
   SDL_RenderFillRect(sdl_renderer, &block);
-
 
   // Render Player Image
   SDL_RenderCopy(sdl_renderer, player_image, NULL, &block);
@@ -132,7 +133,7 @@ void Renderer::LoadPlayerImage() {
 
 void Renderer::LoadTerrainImage() {
 
-  std::string path = "/Users/kitson_swann/Documents/udacity_cpp/udacity_cpp_capstone/src/img/stone.png";
+  std::string path = "/Users/kitson_swann/Documents/udacity_cpp/udacity_cpp_capstone/src/img/grass.png";
 
   printf("Before load");
   //Load image at specified path
@@ -151,6 +152,34 @@ void Renderer::LoadTerrainImage() {
           printf( "Unable to optimize image %s! SDL Error: %s\n", path.c_str(), SDL_GetError() );
       }
       printf("Loaded terrain_imagee");
+
+      //Get rid of old loaded surface
+      SDL_FreeSurface( loadedSurface );
+  }
+}
+
+
+void Renderer::LoadFoodImage() {
+
+  std::string path = "/Users/kitson_swann/Documents/udacity_cpp/udacity_cpp_capstone/src/img/food.png";
+
+  printf("Before load");
+  //Load image at specified path
+  SDL_Surface *loadedSurface = IMG_Load( path.c_str() );
+
+  if( loadedSurface == NULL )
+  {
+      printf( "Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError() );
+  }
+  else
+  {
+      //Convert surface to screen format
+      food_image = SDL_CreateTextureFromSurface(sdl_renderer, loadedSurface);
+      if( food_image == NULL )
+      {
+          printf( "Unable to optimize image %s! SDL Error: %s\n", path.c_str(), SDL_GetError() );
+      }
+      printf("Loaded food image");
 
       //Get rid of old loaded surface
       SDL_FreeSurface( loadedSurface );

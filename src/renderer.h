@@ -17,12 +17,14 @@ class Renderer {
   void UpdateWindowTitle(int score, int fps);
   void LoadPlayerImage();
   void LoadTerrainImage();
+  void LoadFoodImage();
 
  private:
   SDL_Window *sdl_window;
   SDL_Renderer *sdl_renderer;
   SDL_Texture *player_image = NULL;
   SDL_Texture *terrain_image = NULL;
+  SDL_Texture *food_image = NULL;
 
   const std::size_t screen_width;
   const std::size_t screen_height;

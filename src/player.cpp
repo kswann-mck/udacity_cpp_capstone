@@ -34,9 +34,11 @@ void Player::UpdatePosition() {
     position_y = 0;
     velocity_y = 0;
   }
-  else if (position_y > grid_height-height) {
-    position_y = (float)grid_height-height;
+  // player is dead from falling down a hole
+  else if (position_y >= grid_height) {
+    //position_y = (float)grid_height-height;
     velocity_y = 0;
+    alive = false;
   }
 }
 
