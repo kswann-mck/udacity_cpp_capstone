@@ -52,6 +52,9 @@ Renderer::~Renderer() {
   SDL_Quit();
 }
 
+/*
+Renders the background, terrain, player and food to the screen
+*/
 void Renderer::Render(Player const player, SDL_Point const &food, Terrain const terrain) {
   SDL_Rect block;
   block.w = screen_height / grid_height;

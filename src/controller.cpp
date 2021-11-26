@@ -3,8 +3,11 @@
 #include "SDL.h"
 #include "player.h"
 
-void Controller::ChangeDirection(Player &player, Player::Direction input,
-                                 Player::Direction opposite) const {
+/*
+Changes the velocity of the player in the x and y direction in response to the input
+keystroke.
+*/
+void Controller::ChangeDirection(Player &player, Player::Direction input) const {
   switch (input) {
     case Player::Direction::kUp:
       player.velocity_y -= 0.2;
@@ -25,32 +28,29 @@ void Controller::ChangeDirection(Player &player, Player::Direction input,
   return;
 }
 
+/*
+Handles keyboard input from the user
+*/
 void Controller::HandleInput(bool &running, Player &player) const {
   SDL_Event e;
   while (SDL_PollEvent(&e)) {
     if (e.type == SDL_QUIT) {
       running = false;
     } else {
-    //} else if (e.type == SDL_KEYDOWN) {
-
-      SDL_PumpEvents();
+      SDL_PumpEvents(); // gets the state of all keys rather than the one last pressed.
       const Uint8* keystates = SDL_GetKeyboardState( NULL );
 
       if (keystates[SDL_GetScancodeFromKey(SDLK_UP)]) {
-          ChangeDirection(player, Player::Direction::kUp,
-                          Player::Direction::kDown);
+          ChangeDirection(player, Player::Direction::kUp);
       }
       if (keystates[SDL_GetScancodeFromKey(SDLK_DOWN)]) {
-          ChangeDirection(player, Player::Direction::kDown,
-                          Player::Direction::kUp);
+          ChangeDirection(player, Player::Direction::kDown);
       }
       if (keystates[SDL_GetScancodeFromKey(SDLK_LEFT)]) {
-        ChangeDirection(player, Player::Direction::kLeft,
-                          Player::Direction::kRight);
+        ChangeDirection(player, Player::Direction::kLeft);
       }
       if (keystates[SDL_GetScancodeFromKey(SDLK_RIGHT)]) {
-        ChangeDirection(player, Player::Direction::kRight,
-                          Player::Direction::kLeft);
+        ChangeDirection(player, Player::Direction::kRight);
       }
     }
   }

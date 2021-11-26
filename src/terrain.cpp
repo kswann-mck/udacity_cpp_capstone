@@ -3,6 +3,12 @@
 #include <iostream>
 #include <algorithm>
 
+/*
+As the player moves to the right, new terrain columns are added to 
+the right hand side, and the position of the player, food and terrain
+blocks are shifted accordingly. Blocks that are no long on the screen to the left
+are removed
+*/
 void Terrain::Advance(Player &player, SDL_Point &food) {
   if (advance_n % 10 == 0) {
     if (player.position_x >= grid_width-6) {
@@ -39,6 +45,10 @@ void Terrain::Advance(Player &player, SDL_Point &food) {
   advance_n += 1;
 }
 
+/*
+Generates an int representing the height of the next column to be generated in
+the terrain
+*/
 int Terrain::NextColumnHeight() {
   int up_down = rand() % 3 -1; // random -1, 0, 1
   int next_height = last_column_height + up_down;
@@ -56,6 +66,9 @@ int Terrain::NextColumnHeight() {
   return next_height;
 }
 
+/*
+Generates the next column which is a vector of SDL_Point objects
+*/
 std::vector<SDL_Point> Terrain::NewColumn(int height, int current_width) {
   std::vector<SDL_Point> terrain_column;
   for (int hi = grid_height - 1; hi >= grid_height-height; hi--) {
@@ -67,6 +80,9 @@ std::vector<SDL_Point> Terrain::NewColumn(int height, int current_width) {
   return terrain_column;
 }
 
+/*
+Generates the initial terrain columns to fill the screen on initialization
+*/
 void Terrain::Generate() {
     int next_height = 0;
     std::vector<SDL_Point> terrain_column;
@@ -79,6 +95,10 @@ void Terrain::Generate() {
     }
 }
 
+/*
+Checks if the player has collided with any of the terrain blocks and adjusts the
+player position and velocity such that the player is kept to the outside of the terrain blocks.
+*/
 void Terrain::CollidesWith(Player &player) {
   float x0 = player.position_x;
   float x1 = x0 + player.width;
@@ -115,7 +135,11 @@ void Terrain::CollidesWith(Player &player) {
   }
 }
 
-
+/*
+After a randomly generated position for the next food item is created,
+if it interferes with the terrain blocks, it is pushed "up" until it's at the top of
+the column
+*/
 void Terrain::PushToTop(float &x0, float &y0, float width, float height) {
 
   float x1 = x0 + width;

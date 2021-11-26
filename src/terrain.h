@@ -5,7 +5,9 @@
 #include "SDL.h"
 #include "player.h"
 
-
+/*
+Class to represent the terrain blocks, and operations related to them
+*/
 class Terrain {
  public:
 

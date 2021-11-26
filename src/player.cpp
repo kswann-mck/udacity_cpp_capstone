@@ -15,6 +15,11 @@ void Player::Update() {
       static_cast<int>(position_y)};  // Capture the position cell after updating.
 }
 
+/*
+Updates the player's position and velocity according
+to their x and y velocity, and the coefficient of friction and gravity.
+Updates the alive property of the player if they have fallen down a hole.
+*/
 void Player::UpdatePosition() {
 
   position_y += velocity_y;

@@ -56,6 +56,10 @@ void Game::Run(Controller const &controller, Renderer &renderer,
   }
 }
 
+/*
+Adds a new food item to the screen in a random position that doesn't collide with the player
+or the terrain
+*/
 void Game::PlaceFood() {
   float width = 0.95;
   float height = 0.95;
@@ -78,6 +82,10 @@ void Game::PlaceFood() {
   }
 }
 
+/*
+Updates the position of the player, increments the score, places new food if required and advances the terrain in 
+the case of the user moving far enough to the right
+*/
 void Game::Update() {
   if (!player.alive) return;
 
