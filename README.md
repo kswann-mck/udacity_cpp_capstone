@@ -84,9 +84,11 @@ that satisfies the requirement.
     - [x] All class members that are set to argument values are initialized through member initialization lists.
       - Example can be seen in the `Player` constructor in [player.h](src/player.h)
 - Classes abstract implementation details from their interfaces.
-    - All class member functions document their effects, either through function names, comments, or formal documentation. Member functions do not change program state in undocumented ways.
+    - [x] All class member functions document their effects, either through function names, comments, or formal documentation. Member functions do not change program state in undocumented ways.
+      - See [terrain.cpp](src/terrain.cpp) as an example.
 - Classes encapsulate behavior.
-    - Appropriate data and functions are grouped into classes. Member data that is subject to an invariant is hidden from the user. State is accessed via member functions.
+    - [x] Appropriate data and functions are grouped into classes. Member data that is subject to an invariant is hidden from the user. State is accessed via member functions.
+      - See [terrain.h](src/terrain.h) and [terrain.cpp](src/terrain.cpp) for an example.
 - Classes follow an appropriate inheritance hierarchy.
     - Inheritance hierarchies are logical. Composition is used instead of inheritance when appropriate. Abstract classes are composed of pure virtual functions. Override functions are specified.
 - Overloaded functions allow the same function to operate on different parameters.
