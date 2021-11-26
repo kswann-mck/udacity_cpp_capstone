@@ -36,7 +36,7 @@ To make this game I adapted the Snake Game code in a number of ways including:
 1. Clone this repo.
 2. Make a build directory in the top level directory: `mkdir build && cd build`
 3. Compile: `cmake .. && make`
-4. Run it: `./UnicornGame`.
+4. Run it: `./UnicornRunGame`.
 
 
 ## CC Attribution-ShareAlike 4.0 International
