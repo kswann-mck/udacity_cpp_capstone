@@ -1,12 +1,18 @@
 # CPPND: Capstone Unicorn Run Game
 
-For my capstone I started with the [starter Snake Game](https://github.com/udacity/CppND-Capstone-Snake-Game), and modified it to create a new game that is significantly different that the old one. My new Unicorn Run game, is a side scrolling Mario style game, where you move a Unicorn along terrain, while collecting food. You get points both for distance travelled and food collected. As you move the terrain is generated randomly by the game, allowing you to basically continuously run forever. To make this game I adapted the Snake Game code in a number of ways including:
+For my capstone I started with the [starter Snake Game](https://github.com/udacity/CppND-Capstone-Snake-Game), and modified it to create a new game. 
+I wanted to make something that would be fun for my kids, so I modified the snake game and turned it into a side scrolling Mario style game, 
+where you move a Unicorn along terrain, while collecting rainbows. 
+You get points for each rainbow you capture, and if you fall down a hole, the game ends. 
+As you move towards the right, the terrain is generated randomly by the game, allowing you to basically continuously run forever. 
+To make this game I adapted the Snake Game code in a number of ways including:
 
 - Changing the player into a unicorn without an expanding body and adding a graphic image overlay.
+- Adding a rainbow image for the food.
+- Adding a terain class that represents the terrain blocks that form the ground.
 - Implementing some simple physics for the environment including velocity of the unicorn, jumping, gravity, friction and collision detection with the terain blocks.
-- Implementing a terrain class that randomly generates the terrain, and then as the player advances to the right, continues to add randomly generated terrain.
 
-<img src="unicorn_run.gif"/>
+<img src="unicorn.gif"/>
 
 
 ## Dependencies for Running Locally
@@ -30,7 +36,7 @@ For my capstone I started with the [starter Snake Game](https://github.com/udaci
 1. Clone this repo.
 2. Make a build directory in the top level directory: `mkdir build && cd build`
 3. Compile: `cmake .. && make`
-4. Run it: `./UnicornGame`.
+4. Run it: `./UnicornRunGame`.
 
 
 ## CC Attribution-ShareAlike 4.0 International
