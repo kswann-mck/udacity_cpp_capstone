@@ -20,6 +20,6 @@ message ([STATUS] "SDL2_LIBRARY" ${SDL2_LIBRARY})
 message ([STATUS] "SDL2_IMAGE_INCLUDE_DIRS" ${SDL2_IMAGE_INCLUDE_DIR})
 message ([STATUS] "SDL2_IMAGE_LIBRARY" ${SDL2_IMAGE_LIBRARY})
 
-add_executable(PlayerGame src/main.cpp src/game.cpp src/controller.cpp src/renderer.cpp src/player.cpp src/terrain.cpp)
+add_executable(UnicornRunGame src/main.cpp src/game.cpp src/controller.cpp src/renderer.cpp src/player.cpp src/terrain.cpp)
 #string(STRIP "${SDL2_LIBRARIES}" SDL2_LIBRARIES)
-target_link_libraries(PlayerGame ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY})
+target_link_libraries(UnicornRunGame ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY})
