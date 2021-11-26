@@ -6,7 +6,7 @@ For my capstone I started with the [starter Snake Game](https://github.com/udaci
 - Implementing some simple physics for the environment including velocity of the unicorn, jumping, gravity, friction and collision detection with the terain blocks.
 - Implementing a terrain class that randomly generates the terrain, and then as the player advances to the right, continues to add randomly generated terrain.
 
-<img src="unicorn_run.gif"/>
+<img src="unicorn.gif"/>
 
 
 ## Dependencies for Running Locally
