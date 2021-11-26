@@ -8,8 +8,7 @@ class Controller {
   void HandleInput(bool &running, Player &player) const;
 
  private:
-  void ChangeDirection(Player &Player, Player::Direction input,
-                       Player::Direction opposite) const;
+  void ChangeDirection(Player &Player, Player::Direction input) const;
 };
 
 #endif
