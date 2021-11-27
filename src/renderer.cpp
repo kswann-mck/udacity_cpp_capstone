@@ -1,6 +1,6 @@
 #include "renderer.h"
 #include <iostream>
-#include <experimental/filesystem>
+#include <filesystem>
 #include <string>
 
 Renderer::Renderer(const std::size_t screen_width,
@@ -110,7 +110,7 @@ void Renderer::UpdateWindowTitle(int score, int fps) {
 
 void Renderer::LoadPlayerImage() {
 
-  std::experimental::filesystem::path p = std::experimental::filesystem::current_path();
+  std::filesystem::path p = std::filesystem::current_path();
   std::string path = p.string() + "/../src/img/player.png";
 
   //Load image at specified path
@@ -136,7 +136,7 @@ void Renderer::LoadPlayerImage() {
 
 void Renderer::LoadTerrainImage() {
 
-  std::experimental::filesystem::path p = std::experimental::filesystem::current_path();
+  std::filesystem::path p = std::filesystem::current_path();
   std::string path = p.string() + "/../src/img/grass.png";
 
   //Load image at specified path
@@ -163,7 +163,7 @@ void Renderer::LoadTerrainImage() {
 
 void Renderer::LoadFoodImage() {
 
-  std::experimental::filesystem::path p = std::experimental::filesystem::current_path();
+  std::filesystem::path p = std::filesystem::current_path();
   std::string path = p.string() + "/../src/img/food.png";
 
   //Load image at specified path
