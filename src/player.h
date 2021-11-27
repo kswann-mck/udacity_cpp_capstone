@@ -2,7 +2,7 @@
 #define PLAYER_H
 
 #include <vector>
-#include "SDL2/SDL.h"
+#include "SDL.h"
 
 class Player {
  public:
