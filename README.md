@@ -151,6 +151,9 @@ that satisfies the requirement.
 3. Compile: `cmake .. && make`
 4. Run it: `./UnicornRunGame`.
 
+Note that this has been tested in the Ubuntu workspace provided by udacity. Here is proof that it works there:
+
+<img src="running_in_workspace.gif"/>
 
 ## CC Attribution-ShareAlike 4.0 International
 
